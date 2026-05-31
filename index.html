@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打字输出 · sero</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0d0d0d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 640px;
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        textarea {
+            width: 100%;
+            height: 180px;
+            background: #242424;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 16px;
+            color: #e0e0e0;
+            font-size: 16px;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        textarea:focus {
+            border-color: #6c5ce7;
+        }
+        textarea::placeholder {
+            color: #666;
+        }
+        .output-label {
+            color: #666;
+            font-size: 13px;
+            margin: 20px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .output-label span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #6c5ce7;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .output {
+            min-height: 60px;
+            background: #242424;
+            border-radius: 12px;
+            padding: 16px;
+            color: #e0e0e0;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        .output:empty::before {
+            content: "在这里看你的文字出现...";
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #444;
+            font-size: 12px;
+        }
+        .counter {
+            text-align: right;
+            color: #555;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .clear-btn {
+            background: none;
+            border: 1px solid #333;
+            color: #666;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .clear-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        h1 {
+            color: #e0e0e0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        h1 small {
+            color: #555;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>打字输出 <small>· sero</small></h1>
+            <button class="clear-btn" onclick="clearAll()">清空</button>
+        </div>
+
+        <textarea id="input" placeholder="在这里打字..." oninput="updateOutput()"></textarea>
+
+        <div class="output-label">
+            <span></span>
+            输出
+        </div>
+        <div class="output" id="output"></div>
+
+        <div class="counter">
+            字数: <span id="count">0</span>
+        </div>
+
+        <div class="footer">
+            布鲁斯 🐶 · GitHub Pages
+        </div>
+    </div>
+
+    <script>
+        function updateOutput() {
+            const val = document.getElementById('input').value;
+            document.getElementById('output').textContent = val;
+            document.getElementById('count').textContent = val.length;
+        }
+        function clearAll() {
+            document.getElementById('input').value = '';
+            updateOutput();
+            document.getElementById('input').focus();
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('input').focus();
+        });
+    </script>
+</body>
+</html>
